@@ -43,7 +43,8 @@ export async function main(ns) {
 	// Information directed towards user.
 	// Pro tip: 250 ms in sleep time is almost perfect for preventing the main toast from being flooded out.
 	//
-    ns.toast("Releasing AUTOCON Virus.","warning",10000);
+    ns.toast("Releasing AUTOCON Virus....","warning",10000);
+	await ns.sleep(2000);
 
     while (i!=srvlst.length) {
 		var srv = srvlst[i];
@@ -77,6 +78,8 @@ export async function main(ns) {
 
 			// Phase 1
 
+				ns.toast(`Checking ${srv}.....`,"warning");
+
 				var hasScriptBackdoor = new Boolean;
 				var hasScriptHack = new Boolean;
 				var hasScriptGrow = new Boolean;
@@ -88,11 +91,18 @@ export async function main(ns) {
 				var pathScriptWeaken = "/AUTOCON/host/grow.js"
 				var pathScriptHost = "/AUTOCON/host.js"
 
-				var hasScriptHost = await ns.FileExists(pathScriptHost,srv);
-				var hasScriptWeaken = await ns.FileExsits(pathScriptWeaken,srv);
-				var hasScriptHack = await ns.FileExsits(pathScriptHack,srv);
-				var hasScriptGrow = await ns.FileExsits(pathScriptGrow,srv);
-				var hasScriptBackdoor = await ns.FileExsits(pathScriptBackdoor,srv);
+				var hasScriptHost = await ns.fileExists(pathScriptHost,srv);
+				var hasScriptWeaken = await ns.fileExists(pathScriptWeaken,srv);
+				var hasScriptHack = await ns.fileExists(pathScriptHack,srv);
+				var hasScriptGrow = await ns.fileExists(pathScriptGrow,srv);
+				var hasScriptBackdoor = await ns.fileExists(pathScriptBackdoor,srv);
+
+				if ((hasScriptHost == false)||(hasScriptWeaken == false)||(hasScriptHack == false)||(hasScriptGrow == false)||(hasScriptBackdoor == false)) {
+					ns.toast(`${srv} Check failed.`,'error');
+					ns.toast(`Uploading /host File.....`,`warning`);
+					await ns.scp([pathScriptHost,pathScriptWeaken,pathScriptHack,pathScriptGrow,pathScriptBackdoor],srv);
+					ns.toast(`Upload Complete.`,`success`);
+				} else ns.toast(`${srv} Check Passed.`,'success');
 
 		}	
 		// End Cycle
@@ -100,6 +110,7 @@ export async function main(ns) {
     }
 
 	// Run Phase 3
+	ns.toast("Running Phase 3","warning",10000)
 	this.Phase3(ns);
 }
 export async function Phase2(hostname,ns) {
