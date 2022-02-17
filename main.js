@@ -75,14 +75,36 @@ export async function main(ns) {
 			//	- Run each Server Control file to spread Virus deeper and deeper. 
 			//	- Await message from each Control File to return, ending the script and releasing lots of debug info
 
-			
+			// Phase 1
 
+				var hasScriptBackdoor = new Boolean;
+				var hasScriptHack = new Boolean;
+				var hasScriptGrow = new Boolean;
+				var hasScriptWeaken = new Boolean;
+				var hasScriptHost = new Boolean;
+				var pathScriptBackdoor = "/AUTOCON/host/backdoor.js"
+				var pathScriptHack = "/AUTOCON/host/hack.js"
+				var pathScriptGrow = "/AUTOCON/host/grow.js"
+				var pathScriptWeaken = "/AUTOCON/host/grow.js"
+				var pathScriptHost = "/AUTOCON/host.js"
 
+				var hasScriptHost = await ns.FileExists(pathScriptHost,srv);
+				var hasScriptWeaken = await ns.FileExsits(pathScriptWeaken,srv);
+				var hasScriptHack = await ns.FileExsits(pathScriptHack,srv);
+				var hasScriptGrow = await ns.FileExsits(pathScriptGrow,srv);
+				var hasScriptBackdoor = await ns.FileExsits(pathScriptBackdoor,srv);
 
-		}
-		
+		}	
 		// End Cycle
         i=i+1;
     }
 
+	// Run Phase 3
+	this.Phase3(ns);
+}
+export async function Phase2(hostname,ns) {
+	
+}
+export async function Phase3(ns) {
+	
 }
