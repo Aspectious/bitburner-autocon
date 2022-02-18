@@ -10,7 +10,7 @@ For use in AUTOCON pacakge. Edits to file may cause corruption or large errors.
 IDK why i wrote all of that
 
 
-// THIS FILE IS IDENTICAL BECAUSE THIS FILE IS THE ONE PUT ON THE SERVERS
+// This file spreads the influence and provides more money
 
 */
 

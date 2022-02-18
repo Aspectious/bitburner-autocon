@@ -46,6 +46,8 @@ export async function main(ns) {
     ns.toast("Releasing AUTOCON Virus....","warning",10000);
 	await ns.sleep(2000);
 
+	ns.toast("Starting Phase 1.....","warning",10000)
+
     while (i!=srvlst.length) {
 		var srv = srvlst[i];
         ns.toast(`Scan Discovered Server ${srv}`,"info")
@@ -85,7 +87,7 @@ export async function main(ns) {
 				var hasScriptGrow = new Boolean;
 				var hasScriptWeaken = new Boolean;
 				var hasScriptHost = new Boolean;
-				var pathScriptBackdoor = "/AUTOCON/host/backdoor.js"
+				var pathScriptFull = "/AUTOCON/host/autocon-full.js"
 				var pathScriptHack = "/AUTOCON/host/hack.js"
 				var pathScriptGrow = "/AUTOCON/host/grow.js"
 				var pathScriptWeaken = "/AUTOCON/host/grow.js"
@@ -95,14 +97,17 @@ export async function main(ns) {
 				var hasScriptWeaken = await ns.fileExists(pathScriptWeaken,srv);
 				var hasScriptHack = await ns.fileExists(pathScriptHack,srv);
 				var hasScriptGrow = await ns.fileExists(pathScriptGrow,srv);
-				var hasScriptBackdoor = await ns.fileExists(pathScriptBackdoor,srv);
+				var hasScriptFull = await ns.fileExists(pathScriptFull,srv);
 
-				if ((hasScriptHost == false)||(hasScriptWeaken == false)||(hasScriptHack == false)||(hasScriptGrow == false)||(hasScriptBackdoor == false)) {
+				if ((hasScriptHost == false)||(hasScriptWeaken == false)||(hasScriptHack == false)||(hasScriptGrow == false)||(hasScriptFull == false)) {
 					ns.toast(`${srv} Check failed.`,'error');
-					ns.toast(`Uploading /host File.....`,`warning`);
-					await ns.scp([pathScriptHost,pathScriptWeaken,pathScriptHack,pathScriptGrow,pathScriptBackdoor],srv);
+					ns.toast(`Uploading Files.....`,`warning`);
+					await ns.scp([pathScriptHost,pathScriptWeaken,pathScriptHack,pathScriptGrow,pathScriptFull],srv);
 					ns.toast(`Upload Complete.`,`success`);
 				} else ns.toast(`${srv} Check Passed.`,'success');
+
+				//While in Development, I use this to modify all code on all servers as a whole.
+				await ns.scp([pathScriptHost,pathScriptWeaken,pathScriptHack,pathScriptGrow,pathScriptFull],srv);
 
 		}	
 		// End Cycle
